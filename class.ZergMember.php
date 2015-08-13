@@ -86,21 +86,17 @@ class ZergMember {
 	 * @param string $id Enter user id
 	 * @param string $key Enter data key
 	 * @param string $value Enter data value
-	 * @return mixed Return true when saved successfully
-	 * @throws Exception
+	 * @return mixed Return true when saved successfully. However if saving failure, Return the error information.
 	 */
 	public function setUserData($id, $key, $value) {
 		if(!isset($id) || $id == "") {
-			throw new Exception("아이디를 입력해주세요."); // throw exception "Please input the id."
-			return false;
+			return "아이디를 입력해주세요."; // Return message "Please input the id."
 		}
 		if(!isset($key) || $key == "") {
-			throw new Exception("키를 입력해주세요."); // throw exception "Please input the key."
-			return false;
+			return "키를 입력해주세요."; // Return message "Please input the key."
 		}
 		if(!isset($value) || $value == "") {
-			throw new Exception("값을 입력해주세요."); // throw exception "Please input the value."
-			return false;
+			return "값을 입력해주세요."; // Return message "Please input the value."
 		}
 		$mysqli = $this->mysqli;
 		$table = $this->dbTable;
@@ -120,8 +116,7 @@ class ZergMember {
 			$mysqli->query($q);
 			return true;
 		} else {
-			throw new Exception("존재하지 않는 계정입니다."); // throw exception "The account does not exist."
-			return false;
+			return "존재하지 않는 계정입니다."; // Return message "The account does not exist."
 		}
 	}
 
@@ -132,17 +127,14 @@ class ZergMember {
 	 * 
 	 * @param string $id Enter user id
 	 * @param string $key Enter data key
-	 * @return mixed Return data value. 
-	 * @throws Exception
+	 * @return mixed Return data value if return successfully. However if return failure, Return the error information.
 	 */
 	public function getUserData($id, $key) {
 		if(!isset($id) || $id == "") {
-			throw new Exception("아이디를 입력해주세요."); // throw exception "Please input the id."
-			return false;
+			return "아이디를 입력해주세요."; // Return message "Please input the id."
 		}
 		if(!isset($key) || $key == "") {
-			throw new Exception("키를 입력해주세요."); // throw exception "Please input the key."
-			return false;
+			return "키를 입력해주세요."; // Return message "Please input the key."
 		}
 		$mysqli = $this->mysqli;
 		$table = $this->dbTable;
@@ -156,12 +148,10 @@ class ZergMember {
 			$jsonUserData = $fetchAssoc["userdata"];
 			$arrUserData = json_decode($jsonUserData, true);
 		} else {
-			throw new Exception("존재하지 않는 계정입니다."); // throw exception "The account does not exist."
-			return false;
+			return "존재하지 않는 계정입니다."; // Return message "The account does not exist."
 		}
 		if(!isset($arrUserData[$key])) {
-			throw new Exception("존재하지 않는 키입니다."); // throw exception "The key does not exist."
-			return false;
+			return "존재하지 않는 키입니다."; // Return message "The key does not exist."
 		}
 		return $arrUserData[$key];
 	}
