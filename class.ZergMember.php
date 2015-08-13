@@ -129,7 +129,7 @@ class ZergMember {
 	 * @param string $key Enter data key
 	 * @return mixed Return data value if return successfully. However if return failure, Return the error information.
 	 */
-	public function getUserData($id, $key) {
+	public function getUserData($id, $key, &$ref) {
 		if(!isset($id) || $id == "") {
 			return "아이디를 입력해주세요."; // Return message "Please input the id."
 		}
@@ -153,7 +153,8 @@ class ZergMember {
 		if(!isset($arrUserData[$key])) {
 			return "존재하지 않는 키입니다."; // Return message "The key does not exist."
 		}
-		return $arrUserData[$key];
+		$ref = $arrUserData[$key];
+		return true;
 	}
 
 	/**
